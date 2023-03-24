@@ -55,20 +55,21 @@ namespace DPRNIII_U2_A1_MAZM
 
                 if (clsAltaInformacion.IsStartDateLessOrEqualsToFinishDate(Convert.ToDateTime(maskedTextBoxFechaInicial.Text), Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
                 {
-                    if (clsAltaInformacion.isDateBeforeToday(Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
-                    {
-                        /*
-                        int res = clsAltaInformacion.getYearOfGivenDate(Convert.ToDateTime(maskedTextBoxFechaFinal.Text));
-                        if(res < 1)
-                        {
 
-                        }*/
-                    }
-                    else
-                    {
-                        MessageBox.Show("La fecha real de finalización del proyecto no puede ser mayor a la fecha actual");
-                        //this.Close();
-                    }
+                    //if (clsAltaInformacion.isDateBeforeToday(Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
+                    //{
+
+                    //    int res = clsaltainformacion.getyearofgivendate(convert.todatetime(maskedtextboxfechafinal.text));
+                    //    if (res < 1)
+                    //    {
+
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    MessageBox.Show("La fecha real de finalización del proyecto no puede ser mayor a la fecha actual");
+                    //    this.Close();
+                    //}
                 }
                 else
                 {
@@ -78,8 +79,8 @@ namespace DPRNIII_U2_A1_MAZM
 
                 if (
                     clsAltaInformacion.isDateValid(maskedTextBoxFechaInicial.Text, maskedTextBoxFechaFinal.Text).Equals(true) &&
-                    clsAltaInformacion.IsStartDateLessOrEqualsToFinishDate(Convert.ToDateTime(maskedTextBoxFechaInicial.Text), Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true) &&
-                    clsAltaInformacion.isDateBeforeToday(Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
+                    clsAltaInformacion.IsStartDateLessOrEqualsToFinishDate(Convert.ToDateTime(maskedTextBoxFechaInicial.Text), Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true)) //&&
+                    //clsAltaInformacion.isDateBeforeToday(Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
                 {
                     int estatus = Convert.ToInt32(txtStatus.Text);
                     int idDepto = Convert.ToInt32(cboDepto.Text);
@@ -105,7 +106,7 @@ namespace DPRNIII_U2_A1_MAZM
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            this.Close();
+           this.Close();
         }
 
         private void btnBuscarProyecto_Click(object sender, EventArgs e)
