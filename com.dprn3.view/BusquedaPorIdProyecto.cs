@@ -22,7 +22,8 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
         {
             InitializeComponent();
          
-            dgvProyectosFinalizadosMes.Visible = false;
+            dgvProyectosFinalizadosMes.Visible = true;
+            dgvProyectosSinAsignar.Visible = true;
             btnModificar.Enabled = false;
             btnEliminar.Enabled = false;
             txtAuxiliarFecha.Visible = true;
@@ -64,6 +65,12 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             dgvFiltradoProyectos.DataSource = filtradoProyectos.consultaProyectosPorFinalizar(Convert.ToDateTime(txtFechaActual.Text), Convert.ToDateTime(txtFechaLimite.Text));
         }
 
+        public void FillGridViewProyectosSinAsignacion()
+        {
+            clsAltaInformacion proyectosSinAsignar = new clsAltaInformacion();
+            dgvProyectosSinAsignar.DataSource = proyectosSinAsignar.ConsultaProyectosSinAsignacion();
+        }
+
         private void BusquedaPorIdProyecto_Load(object sender, EventArgs e)
         {
            
@@ -75,30 +82,36 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
 
             }
 
-           
+            FillGridViewProyectosSinAsignacion();
+
+
+
             DateTime dt = DateTime.Now;
             txtFechaActual.Text = Convert.ToString(dt);
 
         }
 
 
+
         private void btnSalir_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine(clsAltaInformacion.desfaseDiasTerminacion(Convert.ToDateTime(fechaDesfase), Convert.ToDateTime(dtpFechaFinal.Text)));
-            this.Close();
+           this.Close();
         }
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            fechaAuxiliar = txtAuxiliarFecha.Text;
+            
+                //Variables locales auxiliares
+                fechaAuxiliar = txtAuxiliarFecha.Text;
+                int numeroDiasDesface = clsAltaInformacion.desfaseDiasTerminacion(Convert.ToDateTime(fechaDesfase), Convert.ToDateTime(dtpFechaFinal.Text));
 
-            //Actualiza la información del proyecto
-            int idProyecto = Convert.ToInt32(dgvIdProyecto.CurrentRow.Cells[0].Value.ToString());
-            clsAltaInformacion.actualizaProyecto(idProyecto, txtProyecto.Text, txtDescripcion.Text, dtpFechaInicial.Value, dtpFechaFinal.Value, Convert.ToInt32(txtEstatus.Text), Convert.ToInt32(txtDepartamento.Text));
+                //Actualiza la información del proyecto
+                int idProyecto = Convert.ToInt32(dgvIdProyecto.CurrentRow.Cells[0].Value.ToString());
+                clsAltaInformacion.actualizaProyecto(idProyecto, txtProyecto.Text, txtDescripcion.Text, dtpFechaInicial.Value, dtpFechaFinal.Value, Convert.ToInt32(txtEstatus.Text), Convert.ToInt32(txtDepartamento.Text), numeroDiasDesface);
 
-            //Despliega datos actualizados
-            FillGridView();
-
+                //Despliega datos actualizados
+                FillGridView();
+            
          
         }
 
@@ -128,9 +141,16 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
 
         private void button1_Click(object sender, EventArgs e)
         {
-            dtpFechaFinal.Format = DateTimePickerFormat.Custom;
-            dtpFechaFinal.CustomFormat = " ";
+            //dtpFechaFinal.Format = DateTimePickerFormat.Custom;
+            //dtpFechaFinal.CustomFormat = " ";
             txtAuxiliarFecha.Text = " ";
+            int idProyecto = Convert.ToInt32(dgvIdProyecto.CurrentRow.Cells[0].Value.ToString());
+            clsAltaInformacion.actualizaProyectoSinDesfase(idProyecto, txtProyecto.Text, txtDescripcion.Text, dtpFechaInicial.Value, dtpFechaFinal.Value, Convert.ToInt32(txtEstatus.Text), Convert.ToInt32(txtDepartamento.Text));
+
+            //Despliega datos actualizados
+            FillGridView();
+
+
         }
 
 
@@ -264,7 +284,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
 
             frmBusquedaEmpleado dgv2 = new frmBusquedaEmpleado();
             frmAsignacionProyectos consultaProyecto = new frmAsignacionProyectos();
-            TablasDataGridView dgv4 = new TablasDataGridView();
+            //TablasDataGridView dgv4 = new TablasDataGridView();
 
 
             //Exporta a PDF la tabla proyectos de la base de datos
@@ -313,7 +333,27 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
                                 }
                             }
 
-                           
+                            //Listado de proyectos sin asignar
+                            PdfPTable pdfProyectosSinAsignacion= new PdfPTable(dgvProyectosSinAsignar.Columns.Count);
+                            pdfProyectosSinAsignacion.DefaultCell.Padding = 3;
+                            pdfProyectosSinAsignacion.WidthPercentage = 100;
+                            pdfProyectosSinAsignacion.HorizontalAlignment = Element.ALIGN_LEFT;
+
+                            foreach (DataGridViewColumn column in dgvProyectosSinAsignar.Columns)
+                            {
+                                PdfPCell cell = new PdfPCell(new Phrase(column.HeaderText));
+                                pdfProyectosSinAsignacion.AddCell(cell);
+                            }
+
+                            foreach (DataGridViewRow row in dgvProyectosSinAsignar.Rows)
+                            {
+                                foreach (DataGridViewCell cell in row.Cells)
+                                {
+                                    pdfProyectosSinAsignacion.AddCell(cell.Value.ToString());
+                                }
+                            }
+
+
 
                             PdfPTable pdfTable2 = new PdfPTable(dgv2.dgvDespliegaInformacionEmpleado.Columns.Count);
                             pdfTable2.DefaultCell.Padding = 3;
@@ -405,7 +445,6 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
                                 pdfDoc.Open();
 
                                 //Agrega celda de espaciado
-
                                 PdfPTable tb_espaciado = new PdfPTable(3);
                                 tb_espaciado.TotalWidth = pdfDoc.PageSize.Width - pdfDoc.LeftMargin - pdfDoc.RightMargin;
                                 tb_espaciado.DefaultCell.Border = 0;
@@ -486,6 +525,20 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
                                 tbHeaderIdProyecto.AddCell(_cell_IdProyecto);
                                 tbHeaderIdProyecto.AddCell(new Paragraph());
 
+                                //Header para listado de proyectos sin asignacion
+                                PdfPTable tbHeaderProyectoSINAsignar = new PdfPTable(3);
+                                tbHeaderProyectoSINAsignar.TotalWidth = pdfDoc.PageSize.Width - pdfDoc.LeftMargin - pdfDoc.RightMargin;
+                                tbHeaderProyectoSINAsignar.DefaultCell.Border = 0;
+                                tbHeaderProyectoSINAsignar.AddCell(new Paragraph());
+                                PdfPCell _cell_IdProyectoSINAsignar = new PdfPCell(new Paragraph("Proyectos Sin Asignacion"));
+                                _cell_IdProyectoSINAsignar.HorizontalAlignment = Element.ALIGN_CENTER;
+                                _cell_IdProyectoSINAsignar.Border = 0;
+                                //Indicar en donde se va a ubicar la tabla con el header del IdProyecto
+                                tbHeaderProyectoSINAsignar.WriteSelectedRows(0, -1, pdfDoc.LeftMargin, pw2.PageSize.GetTop(pdfDoc.TopMargin) + 40, pw2.DirectContent);
+                                tbHeaderProyectoSINAsignar.AddCell(_cell_IdProyectoSINAsignar);
+                                tbHeaderProyectoSINAsignar.AddCell(new Paragraph());
+
+
 
                                 //Header para reporte de empleados
                                 PdfPTable header_empleados = new PdfPTable(3);
@@ -505,6 +558,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
                                 pdfDoc.Add(tb_espaciado);
                                 pdfDoc.Add(pdfTable);
                                 pdfDoc.Add(tb_espaciado);
+
                                 pdfDoc.Add(tbHeaderReportePorMes);
                                 pdfDoc.Add(tb_espaciado_2);
                                 pdfDoc.Add(pdfTableFiltroPorMes);
@@ -524,7 +578,15 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
                                 pdfDoc.Add(tb_espaciado);
                                 pdfDoc.Add(pdfTable_asignacion_proyectos);
                                 pdfDoc.Add(tb_espaciado);
-                         
+
+                                pdfDoc.Add(tbHeaderProyectoSINAsignar);
+                                pdfDoc.Add(tb_espaciado);
+                                pdfDoc.Add(pdfProyectosSinAsignacion);
+                                pdfDoc.Add(tb_espaciado);
+
+
+
+
 
 
                                 pdfDoc.Close();

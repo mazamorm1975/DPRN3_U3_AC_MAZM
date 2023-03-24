@@ -447,7 +447,7 @@ namespace DPRNIII_U2_A1_MAZM
         }
 
         //Actualiza datos del empleado
-        public static void actualizaProyecto(int idProyecto, string nombre, string descripcion, DateTime fechaInicial, DateTime fechaFinal, int estatus, int departamento)
+        public static void actualizaProyecto(int idProyecto, string nombre, string descripcion, DateTime fechaInicial, DateTime fechaFinal, int estatus, int departamento, int numeroDiasDesface)
         {
             MySqlConnection connUpdate = null;
             connUpdate = conectarBase.conectarBaseDatos();
@@ -457,7 +457,7 @@ namespace DPRNIII_U2_A1_MAZM
             if (BusquedaPorIdProyecto.fechaAuxiliar != " ")
             {
                 MySqlCommand dataAdapter2 = new MySqlCommand();
-                dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final='" + fechaFinal.ToString("yyyy-MM-dd HH:mm:ss") + "', comentarios='Concluido' , estatus ='" + estatus + "', id_departamento = '" + departamento + "' WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
+                dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final='" + fechaFinal.ToString("yyyy-MM-dd HH:mm:ss") + "', comentarios='Concluido' , estatus =0, id_departamento = '" + departamento + "', dias_desfase_terminacion = '"+ numeroDiasDesface + "'  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
                 dataAdapter2.ExecuteNonQuery();
 
                 //Despliega notificación de guardado exitoso
@@ -465,17 +465,29 @@ namespace DPRNIII_U2_A1_MAZM
                 mensajeOffProject.MostrarMensaje();
 
             }
-            else if (BusquedaPorIdProyecto.fechaAuxiliar == " ")
-            {
-                MySqlCommand dataAdapter = new MySqlCommand();
-                dataAdapter = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio ='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', comentarios= 'Disponible', fecha_final =null , estatus ='" + estatus + "', id_departamento = '" + departamento + "' WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
-                dataAdapter.ExecuteNonQuery();
 
-                //Despliega notificación de guardado exitoso
-                Notificacion mensajeOffProject = new Notificacion(new NotificacionGuardar());
-                mensajeOffProject.MostrarMensaje();
-            }
+            
         }
+
+        //Actualiza proyecto sin dias de desfase
+        public static void actualizaProyectoSinDesfase(int idProyecto, string nombre, string descripcion, DateTime fechaInicial, DateTime fechaFinal, int estatus, int departamento)
+        {
+
+            MySqlConnection connUpdate = null;
+            connUpdate = conectarBase.conectarBaseDatos();
+
+            MySqlCommand dataAdapter2 = new MySqlCommand();
+            dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final=null, comentarios='In progress' , estatus =1, id_departamento = '" + departamento + "', dias_desfase_terminacion = null  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
+            dataAdapter2.ExecuteNonQuery();
+
+            //Despliega notificación de guardado exitoso
+            Notificacion mensajeOffProject = new Notificacion(new NotificacionGuardar());
+            mensajeOffProject.MostrarMensaje();
+
+        }
+
+
+
 
 
         public static int desfaseDiasTerminacion(DateTime  y, DateTime x)
@@ -556,7 +568,32 @@ namespace DPRNIII_U2_A1_MAZM
             return Tabla;
         }
 
+        //Obtiene los proyectos SIN asignacion
+        public DataTable ConsultaProyectosSinAsignacion()
+        {
+            //Se crea objeto de tipo DataTable
+            Tabla = new DataTable();
 
+            //Ingresar informacion a base de datos
+            MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+            builder.ConnectionString = "server = localhost; user = root; password =Cu213lona1973; database = base_test; port=3306";
+            MySqlConnection conn = new MySqlConnection(builder.ConnectionString);
+
+            try
+            {
+                string consulta = "SELECT * FROM tb_proyecto WHERE estatus=1;";
+                buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
+                buscar.Fill(Tabla);
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return Tabla;
+        }
 
         //Metodo que ingresa la información a una base de datos
         public static Boolean insertarDatosEmpleado(String idEmpleado, String nombreEmpleado, String apellidoPaterno, String apellidoMaterno, Char status, int perfil)
@@ -585,7 +622,7 @@ namespace DPRNIII_U2_A1_MAZM
             MySqlCommand comando = new MySqlCommand();
             try
             {
-                String cadena = "INSERT INTO tb_proyecto SET nombre='" + nombre + "' , descripcion='" + descripcion + "', fecha_inicio='" + fechaI.ToString("yyyy-MM-dd HH:mm:ss") + "' , fecha_final=null, estatus='" + status + "', id_departamento='" + idDepto + "', fecha_terminacion ='" + fechaTermino.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+                String cadena = "INSERT INTO tb_proyecto SET nombre='" + nombre + "' , descripcion='" + descripcion + "', fecha_inicio='" + fechaI.ToString("yyyy-MM-dd HH:mm:ss") + "' , fecha_final=null, comentarios='In progress', estatus='" + status + "', id_departamento='" + idDepto + "', fecha_terminacion ='" + fechaTermino.ToString("yyyy-MM-dd HH:mm:ss") + "'";
                 comando = new MySqlCommand(cadena, conectarBase.conectarBaseDatos());
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Información Ingresada exitosamente");
@@ -599,6 +636,8 @@ namespace DPRNIII_U2_A1_MAZM
 
             return true;
         }
+
+
 
         //Metodo que ingresa la información sobre una nueva asignacion a proyecto de un empleado a una base de datos
         public static Boolean insertarDatosNuevaAsignacionAProyecto(String idEmpleado, String idProyecto, int asignado, String comentarios)
