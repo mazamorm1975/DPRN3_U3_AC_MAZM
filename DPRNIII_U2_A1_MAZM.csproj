@@ -145,6 +145,12 @@
     <Compile Include="com.dprn3.view\IngresoProyecto.Designer.cs">
       <DependentUpon>IngresoProyecto.cs</DependentUpon>
     </Compile>
+    <Compile Include="com.dprn3.view\Listados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="com.dprn3.view\Listados.Designer.cs">
+      <DependentUpon>Listados.cs</DependentUpon>
+    </Compile>
     <Compile Include="com.dprn3.view\MensajePersonalizado_6.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="com.dprn3.view\IngresoProyecto.resx">
       <DependentUpon>IngresoProyecto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="com.dprn3.view\Listados.resx">
+      <DependentUpon>Listados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="com.dprn3.view\MensajePersonalizado_6.resx">
       <DependentUpon>MensajePersonalizado_6.cs</DependentUpon>

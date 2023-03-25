@@ -11,7 +11,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
         //Se valida si el empleado puede ser asignado a un proyecto
         public static void ValidacionAsignacionEmpleadoProyecto()
         {
-            
+
             for (int i = 0; i < clsAltaInformacion.contarTotalRegistrosEmpleadosAsignados(); i++)
             {
                 //Se valida el proyecto
@@ -32,7 +32,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                                 //Arroja mensaje de restriccion a ingreso por exceder el maximo de desarrolladores
                                 Notificacion mensaje2 = new Notificacion(new NotificacionFalloProgramador());
                                 mensaje2.MostrarMensaje();
-                                 break;
+                                break;
                             }
                             else
                             {
@@ -89,8 +89,17 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                             }
                         }
                     }
+                    else
+                    {
+                        //si ubica al empleado lanza mensaje de que no puede estar en 2 proyectos activos
+                        Notificacion excedePosicion = new Notificacion(new NotificacionExcedeNumeroEmpleados());
+                        excedePosicion.MostrarMensaje();
+                        break;
+                    }
 
-                    /*
+                    /* Descomentar de la linea 101 - 182 en caso de requerir el validar
+                     * el status de asignado = 0 ó asignado = 1 del empleado en el proyecto especificado
+                    
                     //Si el status del empleado es 0
                     if (clsAltaInformacion.isAssigned() == false)
                     {
@@ -165,26 +174,26 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                         clsAltaInformacion.insertarDatosNuevaAsignacionAProyecto(frmAsignacionProyectos.noEmpleado, frmAsignacionProyectos.idProyecto, frmAsignacionProyectos.asignacionEmpleado, frmAsignacionProyectos.comentarios);
                         break;
 
-                    }*/
-                    
-                    if (clsAltaInformacion.isAssigned() == true)
+                    }   
+                    //Si el status del empleado es 1
+                     else if (clsAltaInformacion.isAssigned() == true)
                     {
                         //Arroja mensaje de restriccion a ingreso por exceder el maximo de desarrolladores
                         Notificacion excedePosicion = new Notificacion(new NotificacionExcedeNumeroEmpleados());
                         excedePosicion.MostrarMensaje();
                         break;
-                    }
+                    }*/
                 }
                 else
                 {
                     break;
                 }
-             }
+            }
         }
 
-        
 
-        
+
+
 
     }
 }

@@ -43,6 +43,74 @@ namespace DPRNIII_U2_A1_MAZM
             return Tabla;
         }
 
+        //Metodo para ubicar los proyectos rezagados
+        public DataTable ConsultarProyectosRezagados()
+        {
+
+            Tabla = new DataTable();
+
+            string perfil = frmDatosEmpleados.dato;
+
+            MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+            builder.ConnectionString = "server = localhost; user = root; password = Cu213lona1973; database = base_test; port=3306";
+            MySqlConnection conn = new MySqlConnection(builder.ConnectionString);
+
+            try
+            {
+                String consulta = "SELECT * FROM tb_proyecto WHERE fecha_terminacion < fecha_final";
+                buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
+                buscar.Fill(Tabla);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return Tabla;
+        }
+
+        //Metodo que filtra por proyectos acorde al numero de proyecto proporcionado
+        public DataTable FiltraPorProyecto(int noPro)
+        {
+            Tabla = new DataTable();
+
+            string perfil = frmDatosEmpleados.dato;
+
+            MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+            builder.ConnectionString = "server = localhost; user = root; password = Cu213lona1973; database = base_test; port=3306";
+            MySqlConnection conn = new MySqlConnection(builder.ConnectionString);
+
+            try
+
+            {
+                String consulta = "SELECT" +
+                    " nombre_proyecto," +
+                    "fecha_inicio," +
+                    "fecha_final," +
+                    "fecha_terminacion," +
+                    "ldap_empleado," +
+                    "nombre," +
+                    "apellido_paterno," +
+                    "apellido_materno," +
+                    "nombre_depto," +
+                    "tipo FROM tb_proyecto " +
+                    "INNER JOIN empleado_proyecto ON tb_proyecto.id_proyecto = empleado_proyecto.tb_proyecto_id_proyecto " +
+                    "INNER JOIN tb_departamento ON tb_proyecto.id_proyecto = tb_departamento.id_departamento " +
+                    "INNER JOIN tb_empleado ON empleado_proyecto.tb_empleado_id_empleado = tb_empleado.id_empleado " +
+                    "INNER JOIN tb_perfil ON empleado_proyecto.tb_empleado_id_empleado = tb_perfil.id_perfil " +
+                    "WHERE tb_proyecto.id_proyecto =" +noPro+"";
+
+                buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
+                buscar.Fill(Tabla);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return Tabla;
+        }
+
 
         //Metodo que filtra los proyectos por vencer a partir de la fecha establecida por el usuario
         public DataTable consultaProyectosPorFinalizar(DateTime fechaInicial, DateTime fechaLimite)
@@ -289,12 +357,12 @@ namespace DPRNIII_U2_A1_MAZM
             MySqlConnection conn = null;
             //Valida conexion con base de datos: base_test
             conn = conectarBase.conectarBaseDatos();
-            MySqlCommand cmd = new MySqlCommand("SELECT asignado FROM empleado_proyecto WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "'", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT tb_empleado_id_empleado FROM empleado_proyecto WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "' AND asignado = 1", conn);
             MySqlDataReader reg = cmd.ExecuteReader();
 
             if (reg.Read())
             {
-                //reg["tb_empleado_id_empleado"].ToString();
+                reg["tb_empleado_id_empleado"].ToString();
                 return true;
             }
             else
@@ -303,18 +371,27 @@ namespace DPRNIII_U2_A1_MAZM
             }
         }
 
+
+
+
         //Se valida si el proyecto esta disponible o no esta disponible
         public static Boolean ValidaciónIngresoNuevoProyecto()
         {
-            Boolean fechaFinalProyecto = clsAltaInformacion.fechaFinalExist();
+            
+            String fechaFinalProyecto = clsAltaInformacion.fechaFinalExist();
 
-            if (fechaFinalProyecto == true)
+            if (fechaFinalProyecto == null || fechaFinalProyecto == " ")
+            {
+                return true;                           
+            }
+            else
             {
                 MessageBox.Show("El proyecto ya ha sido concluido, puesto que hay fecha de terminación.");
                 return false;
+
             }
 
-            return true;
+
         }
 
 
@@ -351,21 +428,22 @@ namespace DPRNIII_U2_A1_MAZM
 
 
         //Valida si el id_proyecto de la tabla: tb_proyecto tiene o no fecha_final
-        public static Boolean fechaFinalExist()
+        public static String fechaFinalExist()
         {
             MySqlConnection conn = null;
             conn = conectarBase.conectarBaseDatos();
-            MySqlCommand cmd = new MySqlCommand("SELECT fecha_final FROM tb_proyecto WHERE id_proyecto='"+frmAsignacionProyectos.idProyecto+"' ", conn);
-            
-            MySqlDataReader reg = cmd.ExecuteReader();
+            MySqlCommand cmd = new MySqlCommand("SELECT fecha_final FROM tb_proyecto WHERE fecha_final IS NOT NULL AND id_proyecto='" + frmAsignacionProyectos.idProyecto + "'", conn);
 
-            if (!reg.Read())
+            MySqlDataReader lector = cmd.ExecuteReader();
+
+            if (lector.Read())
             {
-                //reg["fecha_final"].ToString();
-                return true; 
+                //En caso de requerir que se devuelva el perfil del empleado se tendra que poner
+                return lector["fecha_final"].ToString();
+                                                
             }
-            
-            return false;
+
+            return null;
         }
 
         //Verifica si el perfil del empleado es de programador y arroja true o false
@@ -378,8 +456,8 @@ namespace DPRNIII_U2_A1_MAZM
 
             if (lector.Read())
             {
-                /*En caso de requerir que se devuelva el perfil del empleado se tendra que poner
-                (int)lector["tb_perfil_id_perfil"];*/
+                //En caso de requerir que se devuelva el perfil del empleado se tendra que poner
+                lector["tb_perfil_id_perfil"].ToString();
                 return true;
             }
 
@@ -397,8 +475,8 @@ namespace DPRNIII_U2_A1_MAZM
 
             if (lector.Read())
             {
-                /*En caso de requerir que se devuelva el perfil del empleado se tendra que poner
-                (int)lector["tb_perfil_id_perfil"];*/
+                //En caso de requerir que se devuelva el perfil del empleado se tendra que poner
+                lector["tb_perfil_id_perfil"].ToString();
                 return true;
             }
 
@@ -416,8 +494,8 @@ namespace DPRNIII_U2_A1_MAZM
 
             if (lector.Read())
             {
-                /*En caso de requerir que se devuelva el perfil del empleado se tendra que poner
-                (int)lector["tb_perfil_id_perfil"];*/
+                //En caso de requerir que se devuelva el perfil del empleado se tendra que poner
+                lector["tb_perfil_id_perfil"].ToString();
                 return true;
             }
 
