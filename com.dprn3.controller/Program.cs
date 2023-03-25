@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DPRNIII_U2_A1_MAZM.com.dprn3.view;
+using System;
 using System.Windows.Forms;
 
 
@@ -16,7 +17,7 @@ namespace DPRNIII_U2_A1_MAZM
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormularioConexionBaseDeDatos());
-            //Application.Run(new IngresoProyecto());
+            
         }
     }
 }

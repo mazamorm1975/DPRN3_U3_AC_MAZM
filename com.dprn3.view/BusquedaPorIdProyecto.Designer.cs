@@ -31,6 +31,11 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
         {
             this.components = new System.ComponentModel.Container();
             this.grpDatosProyecto = new System.Windows.Forms.GroupBox();
+            this.dgvProyectosFueraTiempo = new System.Windows.Forms.DataGridView();
+            this.dgvFiltradoPorProyectos = new System.Windows.Forms.DataGridView();
+            this.cboProyectos = new System.Windows.Forms.ComboBox();
+            this.btnListados = new FontAwesome.Sharp.IconButton();
+            this.dgvProyectosSinAsignar = new System.Windows.Forms.DataGridView();
             this.cboFiltradoPorMes = new System.Windows.Forms.ComboBox();
             this.lblFiltraMes = new System.Windows.Forms.Label();
             this.btnPDFMasivo = new FontAwesome.Sharp.IconButton();
@@ -50,7 +55,6 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             this.lblDescripcion = new System.Windows.Forms.Label();
             this.txtProyecto = new System.Windows.Forms.TextBox();
             this.lblNombre = new System.Windows.Forms.Label();
-            this.dgvProyectosSinAsignar = new System.Windows.Forms.DataGridView();
             this.dgvProyectosFinalizadosMes = new System.Windows.Forms.DataGridView();
             this.grpAcciones = new System.Windows.Forms.GroupBox();
             this.btnSalir = new FontAwesome.Sharp.IconButton();
@@ -66,6 +70,8 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             this.btnFiltroProyectos = new FontAwesome.Sharp.IconButton();
             this.label1 = new System.Windows.Forms.Label();
             this.grpDatosProyecto.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosFueraTiempo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiltradoPorProyectos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosSinAsignar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosFinalizadosMes)).BeginInit();
             this.grpAcciones.SuspendLayout();
@@ -76,12 +82,16 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             // 
             // grpDatosProyecto
             // 
+            this.grpDatosProyecto.Controls.Add(this.dgvProyectosFueraTiempo);
+            this.grpDatosProyecto.Controls.Add(this.dgvFiltradoPorProyectos);
+            this.grpDatosProyecto.Controls.Add(this.cboProyectos);
+            this.grpDatosProyecto.Controls.Add(this.btnListados);
+            this.grpDatosProyecto.Controls.Add(this.dgvProyectosFinalizadosMes);
             this.grpDatosProyecto.Controls.Add(this.dgvProyectosSinAsignar);
             this.grpDatosProyecto.Controls.Add(this.cboFiltradoPorMes);
             this.grpDatosProyecto.Controls.Add(this.lblFiltraMes);
             this.grpDatosProyecto.Controls.Add(this.btnPDFMasivo);
             this.grpDatosProyecto.Controls.Add(this.btnExportarPDF);
-            this.grpDatosProyecto.Controls.Add(this.dgvProyectosFinalizadosMes);
             this.grpDatosProyecto.Controls.Add(this.lblPDF);
             this.grpDatosProyecto.Controls.Add(this.txtAuxiliarFecha);
             this.grpDatosProyecto.Controls.Add(this.button1);
@@ -103,6 +113,163 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             this.grpDatosProyecto.TabIndex = 1;
             this.grpDatosProyecto.TabStop = false;
             this.grpDatosProyecto.Text = "Detalles_Proyecto";
+            // 
+            // dgvProyectosFueraTiempo
+            // 
+            this.dgvProyectosFueraTiempo.AllowUserToAddRows = false;
+            this.dgvProyectosFueraTiempo.AllowUserToDeleteRows = false;
+            this.dgvProyectosFueraTiempo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProyectosFueraTiempo.Location = new System.Drawing.Point(243, 20);
+            this.dgvProyectosFueraTiempo.Name = "dgvProyectosFueraTiempo";
+            this.dgvProyectosFueraTiempo.ReadOnly = true;
+            this.dgvProyectosFueraTiempo.Size = new System.Drawing.Size(10, 25);
+            this.dgvProyectosFueraTiempo.TabIndex = 26;
+            // 
+            // dgvFiltradoPorProyectos
+            // 
+            this.dgvFiltradoPorProyectos.AllowUserToAddRows = false;
+            this.dgvFiltradoPorProyectos.AllowUserToDeleteRows = false;
+            this.dgvFiltradoPorProyectos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFiltradoPorProyectos.Location = new System.Drawing.Point(225, 20);
+            this.dgvFiltradoPorProyectos.Name = "dgvFiltradoPorProyectos";
+            this.dgvFiltradoPorProyectos.ReadOnly = true;
+            this.dgvFiltradoPorProyectos.Size = new System.Drawing.Size(12, 22);
+            this.dgvFiltradoPorProyectos.TabIndex = 25;
+            // 
+            // cboProyectos
+            // 
+            this.cboProyectos.FormattingEnabled = true;
+            this.cboProyectos.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69",
+            "70",
+            "71",
+            "72",
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80",
+            "81",
+            "82",
+            "83",
+            "84",
+            "85",
+            "86",
+            "87",
+            "88",
+            "89",
+            "90",
+            "91",
+            "92",
+            "93",
+            "94",
+            "95",
+            "96",
+            "97",
+            "98",
+            "99",
+            "100"});
+            this.cboProyectos.Location = new System.Drawing.Point(456, 152);
+            this.cboProyectos.Name = "cboProyectos";
+            this.cboProyectos.Size = new System.Drawing.Size(100, 21);
+            this.cboProyectos.TabIndex = 24;
+            // 
+            // btnListados
+            // 
+            this.btnListados.IconChar = FontAwesome.Sharp.IconChar.Filter;
+            this.btnListados.IconColor = System.Drawing.Color.Green;
+            this.btnListados.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.btnListados.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnListados.Location = new System.Drawing.Point(284, 150);
+            this.btnListados.Name = "btnListados";
+            this.btnListados.Size = new System.Drawing.Size(154, 23);
+            this.btnListados.TabIndex = 23;
+            this.btnListados.Text = "Listados Filtrados";
+            this.btnListados.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnListados.UseVisualStyleBackColor = true;
+            this.btnListados.Click += new System.EventHandler(this.btnListados_Click);
+            // 
+            // dgvProyectosSinAsignar
+            // 
+            this.dgvProyectosSinAsignar.AllowUserToAddRows = false;
+            this.dgvProyectosSinAsignar.AllowUserToDeleteRows = false;
+            this.dgvProyectosSinAsignar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProyectosSinAsignar.Location = new System.Drawing.Point(209, 19);
+            this.dgvProyectosSinAsignar.Name = "dgvProyectosSinAsignar";
+            this.dgvProyectosSinAsignar.ReadOnly = true;
+            this.dgvProyectosSinAsignar.Size = new System.Drawing.Size(10, 22);
+            this.dgvProyectosSinAsignar.TabIndex = 22;
             // 
             // cboFiltradoPorMes
             // 
@@ -285,26 +452,15 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             this.lblNombre.TabIndex = 0;
             this.lblNombre.Text = "Proyecto";
             // 
-            // dgvProyectosSinAsignar
-            // 
-            this.dgvProyectosSinAsignar.AllowUserToAddRows = false;
-            this.dgvProyectosSinAsignar.AllowUserToDeleteRows = false;
-            this.dgvProyectosSinAsignar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyectosSinAsignar.Location = new System.Drawing.Point(209, 23);
-            this.dgvProyectosSinAsignar.Name = "dgvProyectosSinAsignar";
-            this.dgvProyectosSinAsignar.ReadOnly = true;
-            this.dgvProyectosSinAsignar.Size = new System.Drawing.Size(15, 18);
-            this.dgvProyectosSinAsignar.TabIndex = 22;
-            // 
             // dgvProyectosFinalizadosMes
             // 
             this.dgvProyectosFinalizadosMes.AllowUserToAddRows = false;
             this.dgvProyectosFinalizadosMes.AllowUserToDeleteRows = false;
             this.dgvProyectosFinalizadosMes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyectosFinalizadosMes.Location = new System.Drawing.Point(190, 20);
+            this.dgvProyectosFinalizadosMes.Location = new System.Drawing.Point(192, 18);
             this.dgvProyectosFinalizadosMes.Name = "dgvProyectosFinalizadosMes";
             this.dgvProyectosFinalizadosMes.ReadOnly = true;
-            this.dgvProyectosFinalizadosMes.Size = new System.Drawing.Size(13, 20);
+            this.dgvProyectosFinalizadosMes.Size = new System.Drawing.Size(11, 22);
             this.dgvProyectosFinalizadosMes.TabIndex = 6;
             // 
             // grpAcciones
@@ -456,7 +612,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 498);
+            this.ClientSize = new System.Drawing.Size(723, 498);
             this.Controls.Add(this.grpFiltradoProyectos);
             this.Controls.Add(this.dgvIdProyecto);
             this.Controls.Add(this.grpAcciones);
@@ -467,6 +623,8 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
             this.Load += new System.EventHandler(this.BusquedaPorIdProyecto_Load);
             this.grpDatosProyecto.ResumeLayout(false);
             this.grpDatosProyecto.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosFueraTiempo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiltradoPorProyectos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosSinAsignar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProyectosFinalizadosMes)).EndInit();
             this.grpAcciones.ResumeLayout(false);
@@ -514,5 +672,9 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
         private System.Windows.Forms.Label lblFiltraMes;
         private System.Windows.Forms.ComboBox cboFiltradoPorMes;
         private System.Windows.Forms.DataGridView dgvProyectosSinAsignar;
+        private FontAwesome.Sharp.IconButton btnListados;
+        private System.Windows.Forms.ComboBox cboProyectos;
+        public System.Windows.Forms.DataGridView dgvFiltradoPorProyectos;
+        private System.Windows.Forms.DataGridView dgvProyectosFueraTiempo;
     }
 }

@@ -54,3 +54,4 @@ C:\Users\Dell\Documents\Materias UNADM\7mo. Semestre UNADM\Unidad 3. Programaci�
 C:\Users\Dell\Documents\Materias UNADM\7mo. Semestre UNADM\Unidad 3. Programación .NET III\DPRN3_U3_EA_MAZM\DPRN3_U3_A2_MAZM\obj\Debug\DPRNIII_U2_A1_MAZM.exe
 C:\Users\Dell\Documents\Materias UNADM\7mo. Semestre UNADM\Unidad 3. Programación .NET III\DPRN3_U3_EA_MAZM\DPRN3_U3_A2_MAZM\obj\Debug\DPRNIII_U2_A1_MAZM.pdb
 C:\Users\Dell\Documents\Materias UNADM\7mo. Semestre UNADM\Unidad 3. Programación .NET III\DPRN3_U3_EA_MAZM\DPRN3_U3_A2_MAZM\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Dell\Documents\Materias UNADM\7mo. Semestre UNADM\Unidad 3. Programación .NET III\DPRN3_U3_EA_MAZM\DPRN3_U3_A2_MAZM\obj\Debug\DPRNIII_U2_A1_MAZM.com.dprn3.view.Listados.resources

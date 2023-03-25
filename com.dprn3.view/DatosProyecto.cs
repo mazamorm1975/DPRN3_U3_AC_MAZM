@@ -23,7 +23,6 @@ namespace DPRNIII_U2_A1_MAZM
         {
             InitializeComponent();
 
-
             FillGridView();
 
             foreach (DataGridViewRow row in dgvConsultaProyectos.Rows)
@@ -67,6 +66,8 @@ namespace DPRNIII_U2_A1_MAZM
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
+            //noEmpleado = Convert.ToInt32(cboNumeroEmpleado.Text);
+            //Console.WriteLine(clsAltaInformacion.isAssigned());
             this.Close();
         }
 
