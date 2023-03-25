@@ -9,10 +9,11 @@ namespace DPRNIII_U2_A1_MAZM
     public partial class frmAsignacionProyectos : Form
     {
 
-        public static string noEmpleado = "";
+        public static int noEmpleado = 0;
+        public static int idProyecto = 0;
         public static int asignacionEmpleado;
         public static string comentarios;
-        public static string idProyecto = "";
+        
 
         clsAltaInformacion consultaProyecto = new clsAltaInformacion();
 
@@ -43,8 +44,8 @@ namespace DPRNIII_U2_A1_MAZM
         private void btnIngresarAsignacion_Click(object sender, EventArgs e)
         {
             //Variables que reciben la información de los componentes
-            noEmpleado = cboNumeroEmpleado.Text;
-            idProyecto = cboFolio.Text;
+            noEmpleado = Convert.ToInt32(cboNumeroEmpleado.Text);
+            idProyecto = Convert.ToInt32(cboFolio.Text);
             comentarios = txtComentarios.Text;
 
             //Validacion de los radiobuttons, si es que esta o no asignado el proyecto
@@ -111,7 +112,7 @@ namespace DPRNIII_U2_A1_MAZM
 
         private void icbRemover_Click(object sender, EventArgs e)
         {
-            noEmpleado = cboNumeroEmpleado.Text;
+            noEmpleado = Convert.ToInt32(cboNumeroEmpleado.Text);
             clsAltaInformacion.remueveEmpleadoDeProyecto(noEmpleado);
             Notificacion remueveEmpleadoProyecto = new Notificacion(new NotificacionFueraDeProyecto());
             remueveEmpleadoProyecto.MostrarMensaje();
@@ -120,8 +121,8 @@ namespace DPRNIII_U2_A1_MAZM
 
         private void btnActualiza_Click(object sender, EventArgs e)
         {
-            idProyecto = cboFolio.Text;
-            noEmpleado = cboNumeroEmpleado.Text;
+            idProyecto = Convert.ToInt32(cboFolio.Text);
+            noEmpleado = Convert.ToInt32(cboNumeroEmpleado.Text);
             comentarios = txtComentarios.Text;
             clsAltaInformacion.actualizaStatus(noEmpleado);
 

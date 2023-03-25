@@ -22,11 +22,11 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.view
         {
             InitializeComponent();
          
-            dgvProyectosFinalizadosMes.Visible = true;
-            dgvProyectosSinAsignar.Visible = true;
+            dgvProyectosFinalizadosMes.Visible = false;
+            dgvProyectosSinAsignar.Visible = false;
             btnModificar.Enabled = false;
             btnEliminar.Enabled = false;
-            txtAuxiliarFecha.Visible = true;
+            txtAuxiliarFecha.Visible = false;
             this.ttMensajesAyudaUsuario.SetToolTip(this.lblEstatus, "Estatus 1 = Concluido, Estatus 0 = Disponible");
             this.ttMensajesAyudaUsuario.SetToolTip(this.txtEstatus, "Estatus 1 = Concluido, Estatus 0 = Disponible");
             this.ttMensajesAyudaUsuario.SetToolTip(this.txtFechaActual, "Tambien puedes modificar la Fecha_Actual");

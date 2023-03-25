@@ -39,9 +39,6 @@ namespace DPRNIII_U2_A1_MAZM
         private void FillGridView()
         {
             dgvProyecto.DataSource = nuevoIngreso.ConsultarDatosDepartamento();
-
-            //dgvRolEmpleado.Columns[0].Visible = false;
-
         }
 
         private void iconButton1_Click(object sender, EventArgs e)
@@ -56,20 +53,7 @@ namespace DPRNIII_U2_A1_MAZM
                 if (clsAltaInformacion.IsStartDateLessOrEqualsToFinishDate(Convert.ToDateTime(maskedTextBoxFechaInicial.Text), Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
                 {
 
-                    //if (clsAltaInformacion.isDateBeforeToday(Convert.ToDateTime(maskedTextBoxFechaFinal.Text)).Equals(true))
-                    //{
-
-                    //    int res = clsaltainformacion.getyearofgivendate(convert.todatetime(maskedtextboxfechafinal.text));
-                    //    if (res < 1)
-                    //    {
-
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("La fecha real de finalización del proyecto no puede ser mayor a la fecha actual");
-                    //    this.Close();
-                    //}
+                   
                 }
                 else
                 {

@@ -129,9 +129,9 @@ namespace DPRNIII_U2_A1_MAZM
             // 
             // txtDescripcionProyecto
             // 
-            this.txtDescripcionProyecto.Location = new System.Drawing.Point(173, 186);
+            this.txtDescripcionProyecto.Location = new System.Drawing.Point(127, 186);
             this.txtDescripcionProyecto.Name = "txtDescripcionProyecto";
-            this.txtDescripcionProyecto.Size = new System.Drawing.Size(252, 20);
+            this.txtDescripcionProyecto.Size = new System.Drawing.Size(298, 20);
             this.txtDescripcionProyecto.TabIndex = 22;
             // 
             // lblDescripcionProyecto
@@ -148,10 +148,10 @@ namespace DPRNIII_U2_A1_MAZM
             this.dgvProyecto.AllowUserToAddRows = false;
             this.dgvProyecto.AllowUserToDeleteRows = false;
             this.dgvProyecto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvProyecto.Location = new System.Drawing.Point(173, 109);
+            this.dgvProyecto.Location = new System.Drawing.Point(127, 109);
             this.dgvProyecto.Name = "dgvProyecto";
             this.dgvProyecto.ReadOnly = true;
-            this.dgvProyecto.Size = new System.Drawing.Size(252, 59);
+            this.dgvProyecto.Size = new System.Drawing.Size(298, 59);
             this.dgvProyecto.TabIndex = 20;
             // 
             // btnIngresar
@@ -195,9 +195,9 @@ namespace DPRNIII_U2_A1_MAZM
             "3",
             "4",
             "5"});
-            this.cboDepto.Location = new System.Drawing.Point(22, 109);
+            this.cboDepto.Location = new System.Drawing.Point(22, 119);
             this.cboDepto.Name = "cboDepto";
-            this.cboDepto.Size = new System.Drawing.Size(121, 21);
+            this.cboDepto.Size = new System.Drawing.Size(84, 21);
             this.cboDepto.TabIndex = 11;
             this.cboDepto.SelectedIndexChanged += new System.EventHandler(this.cboDepto_SelectedIndexChanged);
             // 
@@ -307,7 +307,7 @@ namespace DPRNIII_U2_A1_MAZM
             "P100"});
             this.cboProyecto.Location = new System.Drawing.Point(22, 58);
             this.cboProyecto.Name = "cboProyecto";
-            this.cboProyecto.Size = new System.Drawing.Size(121, 21);
+            this.cboProyecto.Size = new System.Drawing.Size(84, 21);
             this.cboProyecto.TabIndex = 6;
             // 
             // lblDepartamento

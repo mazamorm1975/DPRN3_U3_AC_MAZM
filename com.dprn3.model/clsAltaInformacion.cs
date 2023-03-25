@@ -161,7 +161,7 @@ namespace DPRNIII_U2_A1_MAZM
 
             try
             {
-                String consulta = "SELECT idEmpleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.idEmpleado = tb_empleado.ldap_empleado WHERE tb_empleado.tb_perfil_id_perfil > 4 AND tb_empleado.tb_perfil_id_perfil < 9 AND empleado_proyecto.idProyecto = '" + frmAsignacionProyectos.idProyecto + "';";
+                String consulta = "SELECT tb_empleado_id_empleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.tb_empleado_id_empleado = tb_empleado.id_empleado WHERE tb_empleado.tb_perfil_id_perfil > 4 AND tb_empleado.tb_perfil_id_perfil < 9 AND empleado_proyecto.tb_proyecto_id_proyecto = '" + frmAsignacionProyectos.idProyecto + "';";
                 buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
                 buscar.Fill(Tabla);
                 noRows = Tabla.Rows.Count;
@@ -189,7 +189,7 @@ namespace DPRNIII_U2_A1_MAZM
 
             try
             {
-                String consulta = "SELECT idEmpleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.idEmpleado = tb_empleado.ldap_empleado WHERE tb_empleado.tb_perfil_id_perfil > 8 AND tb_empleado.tb_perfil_id_perfil < 13 AND empleado_proyecto.idProyecto = '" + frmAsignacionProyectos.idProyecto + "';";
+                String consulta = "SELECT tb_empleado_id_empleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.tb_empleado_id_empleado = tb_empleado.id_empleado WHERE tb_empleado.tb_perfil_id_perfil > 8 AND tb_empleado.tb_perfil_id_perfil < 13 AND empleado_proyecto.tb_proyecto_id_proyecto = '" + frmAsignacionProyectos.idProyecto + "';";
                 buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
                 buscar.Fill(Tabla);
                 noRows = Tabla.Rows.Count;
@@ -217,7 +217,7 @@ namespace DPRNIII_U2_A1_MAZM
 
             try
             {
-                String consulta = "SELECT idEmpleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.idEmpleado = tb_empleado.ldap_empleado WHERE tb_empleado.tb_perfil_id_perfil > 0 AND tb_empleado.tb_perfil_id_perfil < 5 AND empleado_proyecto.idProyecto = '" + frmAsignacionProyectos.idProyecto + "';";
+                String consulta = "SELECT tb_empleado_id_empleado FROM empleado_proyecto INNER JOIN tb_empleado ON empleado_proyecto.tb_empleado_id_empleado = tb_empleado.id_empleado WHERE tb_empleado.tb_perfil_id_perfil > 0 AND tb_empleado.tb_perfil_id_perfil < 5 AND empleado_proyecto.tb_proyecto_id_proyecto = '" + frmAsignacionProyectos.idProyecto + "';";
                 buscar = new MySqlDataAdapter(consulta, conn.ConnectionString);
                 buscar.Fill(Tabla);
                 noRows = Tabla.Rows.Count;
@@ -284,25 +284,45 @@ namespace DPRNIII_U2_A1_MAZM
         }
 
         //Valida si se puede realizar la asignacion acorde a las reglas del negocio
-        public static int isAssigned()
+        public static Boolean isAssigned()
         {
             MySqlConnection conn = null;
             //Valida conexion con base de datos: base_test
             conn = conectarBase.conectarBaseDatos();
-            MySqlCommand cmd = new MySqlCommand("SELECT asignado FROM empleado_proyecto WHERE idEmpleado = '" + frmAsignacionProyectos.noEmpleado + "'", conn);
-            int result = (int)cmd.ExecuteScalar();
+            MySqlCommand cmd = new MySqlCommand("SELECT asignado FROM empleado_proyecto WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "'", conn);
+            MySqlDataReader reg = cmd.ExecuteReader();
 
-            return result;
+            if (reg.Read())
+            {
+                //reg["tb_empleado_id_empleado"].ToString();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Se valida si el proyecto esta disponible o no esta disponible
+        public static Boolean ValidaciónIngresoNuevoProyecto()
+        {
+            Boolean fechaFinalProyecto = clsAltaInformacion.fechaFinalExist();
+
+            if (fechaFinalProyecto == true)
+            {
+                MessageBox.Show("El proyecto ya ha sido concluido, puesto que hay fecha de terminación.");
+                return false;
+            }
+
+            return true;
         }
 
 
 
-
-
-        public static void actualizaStatus(string noEmp)
+        public static void actualizaStatus(int noEmp)
         {
             //Se valida si se sacara a este empleado del proyecto actual
-            if (clsAltaInformacion.isAssigned() == 1 && frmAsignacionProyectos.isAsignacion == 0)
+            if (clsAltaInformacion.isAssigned() == true && frmAsignacionProyectos.isAsignacion == 0)
             {
                 clsAltaInformacion.actualizaInformaciónProyecto();
 
@@ -315,12 +335,12 @@ namespace DPRNIII_U2_A1_MAZM
         {
             MySqlConnection conn = null;
             conn = conectarBase.conectarBaseDatos();
-            MySqlCommand cmd = new MySqlCommand("SELECT idEmpleado FROM empleado_proyecto WHERE idEmpleado = '" + frmAsignacionProyectos.noEmpleado + "'", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT tb_empleado_id_empleado FROM empleado_proyecto WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "'", conn);
             MySqlDataReader reg = cmd.ExecuteReader();
 
             if (reg.Read())
             {
-                reg["idEmpleado"].ToString();
+                reg["tb_empleado_id_empleado"].ToString();
                 return true;
             }
             else
@@ -331,21 +351,21 @@ namespace DPRNIII_U2_A1_MAZM
 
 
         //Valida si el id_proyecto de la tabla: tb_proyecto tiene o no fecha_final
-        public static string fechaFinalExist()
+        public static Boolean fechaFinalExist()
         {
             MySqlConnection conn = null;
             conn = conectarBase.conectarBaseDatos();
-            MySqlCommand cmd = new MySqlCommand("SELECT fecha_final FROM tb_proyecto WHERE nombre = '" + frmAsignacionProyectos.idProyecto + "'", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT fecha_final FROM tb_proyecto WHERE id_proyecto='"+frmAsignacionProyectos.idProyecto+"' ", conn);
+            
             MySqlDataReader reg = cmd.ExecuteReader();
 
-            if (reg.Read())
+            if (!reg.Read())
             {
-                return reg["fecha_final"].ToString();
+                //reg["fecha_final"].ToString();
+                return true; 
             }
-            else
-            {
-                return null;
-            }
+            
+            return false;
         }
 
         //Verifica si el perfil del empleado es de programador y arroja true o false
@@ -353,7 +373,7 @@ namespace DPRNIII_U2_A1_MAZM
         {
             MySqlConnection connection = null;
             connection = conectarBase.conectarBaseDatos();
-            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 4 AND tb_perfil_id_perfil < 9 AND ldap_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
+            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 4 AND tb_perfil_id_perfil < 9 AND id_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
             MySqlDataReader lector = command.ExecuteReader();
 
             if (lector.Read())
@@ -372,7 +392,7 @@ namespace DPRNIII_U2_A1_MAZM
         {
             MySqlConnection connection = null;
             connection = conectarBase.conectarBaseDatos();
-            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 8 AND tb_perfil_id_perfil < 13 AND ldap_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
+            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 8 AND tb_perfil_id_perfil < 13 AND id_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
             MySqlDataReader lector = command.ExecuteReader();
 
             if (lector.Read())
@@ -391,7 +411,7 @@ namespace DPRNIII_U2_A1_MAZM
         {
             MySqlConnection connection = null;
             connection = conectarBase.conectarBaseDatos();
-            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 0 AND tb_perfil_id_perfil < 5 AND ldap_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
+            MySqlCommand command = new MySqlCommand("SELECT tb_perfil_id_perfil FROM tb_empleado WHERE tb_perfil_id_perfil > 0 AND tb_perfil_id_perfil < 5 AND id_empleado ='" + frmAsignacionProyectos.noEmpleado + "' ", connection);
             MySqlDataReader lector = command.ExecuteReader();
 
             if (lector.Read())
@@ -428,7 +448,7 @@ namespace DPRNIII_U2_A1_MAZM
             MySqlConnection connUpdate = null;
             connUpdate = conectarBase.conectarBaseDatos();
             MySqlCommand dataAdapter = new MySqlCommand();
-            dataAdapter = new MySqlCommand("UPDATE empleado_proyecto SET asignado = '" + frmAsignacionProyectos.asignacionEmpleado + "', Comentarios = '" + frmAsignacionProyectos.comentarios + "', idProyecto = '" + frmAsignacionProyectos.idProyecto + "' WHERE idEmpleado = '" + frmAsignacionProyectos.noEmpleado + "'", connUpdate);
+            dataAdapter = new MySqlCommand("UPDATE empleado_proyecto SET asignado = '" + frmAsignacionProyectos.asignacionEmpleado + "', Comentarios = '" + frmAsignacionProyectos.comentarios + "', tb_proyecto_id_proyecto = '" + frmAsignacionProyectos.idProyecto + "' WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "'", connUpdate);
             dataAdapter.ExecuteNonQuery();
             Notificacion mensajeOffProject = new Notificacion(new NotificacionGuardar());
             mensajeOffProject.MostrarMensaje();
@@ -457,7 +477,7 @@ namespace DPRNIII_U2_A1_MAZM
             if (BusquedaPorIdProyecto.fechaAuxiliar != " ")
             {
                 MySqlCommand dataAdapter2 = new MySqlCommand();
-                dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final='" + fechaFinal.ToString("yyyy-MM-dd HH:mm:ss") + "', comentarios='Concluido' , estatus =0, id_departamento = '" + departamento + "', dias_desfase_terminacion = '"+ numeroDiasDesface + "'  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
+                dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre_proyecto = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final='" + fechaFinal.ToString("yyyy-MM-dd HH:mm:ss") + "', comentarios_proyecto='Concluido' , estatus = 0,  desfase_dias_terminacion = '"+ numeroDiasDesface + "'  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
                 dataAdapter2.ExecuteNonQuery();
 
                 //Despliega notificación de guardado exitoso
@@ -477,7 +497,7 @@ namespace DPRNIII_U2_A1_MAZM
             connUpdate = conectarBase.conectarBaseDatos();
 
             MySqlCommand dataAdapter2 = new MySqlCommand();
-            dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final=null, comentarios='In progress' , estatus =1, id_departamento = '" + departamento + "', dias_desfase_terminacion = null  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
+            dataAdapter2 = new MySqlCommand("UPDATE tb_proyecto SET nombre_proyecto = '" + nombre + "', descripcion = '" + descripcion + "', fecha_inicio='" + fechaInicial.ToString("yyyy-MM-dd HH:mm:ss") + "', fecha_final=null, comentarios_proyecto='In progress' , estatus =1, desfase_dias_terminacion = null  WHERE id_proyecto ='" + idProyecto + "' ", connUpdate);
             dataAdapter2.ExecuteNonQuery();
 
             //Despliega notificación de guardado exitoso
@@ -499,12 +519,12 @@ namespace DPRNIII_U2_A1_MAZM
 
 
         //Actualiza status del proyecto
-        public static void remueveEmpleadoDeProyecto(String noEmpleado)
+        public static void remueveEmpleadoDeProyecto(int noEmpleado)
         {
             MySqlConnection connUpdate = null;
             connUpdate = conectarBase.conectarBaseDatos();
             MySqlCommand dataAdapter = new MySqlCommand();
-            dataAdapter = new MySqlCommand("DELETE FROM empleado_proyecto WHERE idEmpleado = '" + frmAsignacionProyectos.noEmpleado + "'", connUpdate);
+            dataAdapter = new MySqlCommand("DELETE FROM empleado_proyecto WHERE tb_empleado_id_empleado = '" + frmAsignacionProyectos.noEmpleado + "'", connUpdate);
             dataAdapter.ExecuteNonQuery();
         }
 
@@ -622,7 +642,7 @@ namespace DPRNIII_U2_A1_MAZM
             MySqlCommand comando = new MySqlCommand();
             try
             {
-                String cadena = "INSERT INTO tb_proyecto SET nombre='" + nombre + "' , descripcion='" + descripcion + "', fecha_inicio='" + fechaI.ToString("yyyy-MM-dd HH:mm:ss") + "' , fecha_final=null, comentarios='In progress', estatus='" + status + "', id_departamento='" + idDepto + "', fecha_terminacion ='" + fechaTermino.ToString("yyyy-MM-dd HH:mm:ss") + "'";
+                String cadena = "INSERT INTO tb_proyecto SET nombre_proyecto='" + nombre + "' , descripcion='" + descripcion + "', fecha_inicio='" + fechaI.ToString("yyyy-MM-dd HH:mm:ss") + "' , fecha_final=null, comentarios_proyecto='In progress', estatus='" + status + "', id_departamento='" + idDepto + "', fecha_terminacion ='" + fechaTermino.ToString("yyyy-MM-dd HH:mm:ss") + "'";
                 comando = new MySqlCommand(cadena, conectarBase.conectarBaseDatos());
                 comando.ExecuteNonQuery();
                 MessageBox.Show("Información Ingresada exitosamente");
@@ -640,12 +660,12 @@ namespace DPRNIII_U2_A1_MAZM
 
 
         //Metodo que ingresa la información sobre una nueva asignacion a proyecto de un empleado a una base de datos
-        public static Boolean insertarDatosNuevaAsignacionAProyecto(String idEmpleado, String idProyecto, int asignado, String comentarios)
+        public static Boolean insertarDatosNuevaAsignacionAProyecto(int idEmpleado, int idProyecto, int asignado, String comentarios)
         {
             MySqlCommand comando = new MySqlCommand();
             try
             {
-                String cadena = "INSERT INTO empleado_proyecto SET idEmpleado='" + idEmpleado + "' , idProyecto='" + idProyecto + "', asignado='" + asignado + "' , comentarios='" + comentarios + "'";
+                String cadena = "INSERT INTO empleado_proyecto SET tb_empleado_id_empleado='" + idEmpleado + "', tb_proyecto_id_proyecto='" + idProyecto + "', asignado='" + asignado + "', Comentarios='" + comentarios + "'";
                 comando = new MySqlCommand(cadena, conectarBase.conectarBaseDatos());
                 comando.ExecuteNonQuery();
 

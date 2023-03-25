@@ -31,7 +31,6 @@ namespace DPRNIII_U2_A1_MAZM
         {
             this.components = new System.ComponentModel.Container();
             this.contenedorAsignacionProyecto = new System.Windows.Forms.GroupBox();
-            this.btnActualiza = new FontAwesome.Sharp.IconButton();
             this.icbRemover = new FontAwesome.Sharp.IconButton();
             this.btnConsultar = new FontAwesome.Sharp.IconButton();
             this.btnSalir = new FontAwesome.Sharp.IconButton();
@@ -58,7 +57,6 @@ namespace DPRNIII_U2_A1_MAZM
             // 
             // contenedorAsignacionProyecto
             // 
-            this.contenedorAsignacionProyecto.Controls.Add(this.btnActualiza);
             this.contenedorAsignacionProyecto.Controls.Add(this.icbRemover);
             this.contenedorAsignacionProyecto.Controls.Add(this.btnConsultar);
             this.contenedorAsignacionProyecto.Controls.Add(this.btnSalir);
@@ -76,22 +74,6 @@ namespace DPRNIII_U2_A1_MAZM
             this.contenedorAsignacionProyecto.TabStop = false;
             this.contenedorAsignacionProyecto.Text = "Nueva_Asignacion_Empleado";
             this.contenedorAsignacionProyecto.Enter += new System.EventHandler(this.contenedorAsignacionProyecto_Enter);
-            // 
-            // btnActualiza
-            // 
-            this.btnActualiza.IconChar = FontAwesome.Sharp.IconChar.UserEdit;
-            this.btnActualiza.IconColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnActualiza.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.btnActualiza.IconSize = 28;
-            this.btnActualiza.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnActualiza.Location = new System.Drawing.Point(355, 19);
-            this.btnActualiza.Name = "btnActualiza";
-            this.btnActualiza.Size = new System.Drawing.Size(138, 35);
-            this.btnActualiza.TabIndex = 10;
-            this.btnActualiza.Text = "Actualiza Estatus";
-            this.btnActualiza.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnActualiza.UseVisualStyleBackColor = true;
-            this.btnActualiza.Click += new System.EventHandler(this.btnActualiza_Click);
             // 
             // icbRemover
             // 
@@ -180,106 +162,106 @@ namespace DPRNIII_U2_A1_MAZM
             // 
             this.cboNumeroEmpleado.FormattingEnabled = true;
             this.cboNumeroEmpleado.Items.AddRange(new object[] {
-            "E1",
-            "E2",
-            "E3",
-            "E4",
-            "E5",
-            "E6",
-            "E7",
-            "E8",
-            "E9",
-            "E10",
-            "E11",
-            "E12",
-            "E13",
-            "E14",
-            "E15",
-            "E16",
-            "E17",
-            "E18",
-            "E19",
-            "E20",
-            "E21",
-            "E22",
-            "E23",
-            "E24",
-            "E25",
-            "E26",
-            "E27",
-            "E28",
-            "E29",
-            "E30",
-            "E31",
-            "E32",
-            "E33",
-            "E34",
-            "E35",
-            "E36",
-            "E37",
-            "E38",
-            "E39",
-            "E40",
-            "E41",
-            "E42",
-            "E43",
-            "E44",
-            "E45",
-            "E46",
-            "E47",
-            "E48",
-            "E49",
-            "E50",
-            "E51",
-            "E52",
-            "E53",
-            "E54",
-            "E55",
-            "E56",
-            "E57",
-            "E58",
-            "E59",
-            "E60",
-            "E61",
-            "E62",
-            "E63",
-            "E64",
-            "E65",
-            "E66",
-            "E67",
-            "E68",
-            "E69",
-            "E70",
-            "E71",
-            "E72",
-            "E73",
-            "E74",
-            "E75",
-            "E76",
-            "E77",
-            "E78",
-            "E79",
-            "E80",
-            "E81",
-            "E82",
-            "E83",
-            "E84",
-            "E85",
-            "E86",
-            "E87",
-            "E88",
-            "E89",
-            "E90",
-            "E91",
-            "E92",
-            "E93",
-            "E94",
-            "E95",
-            "E96",
-            "E97",
-            "E98",
-            "E99",
-            "E100"});
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69",
+            "70",
+            "71",
+            "72",
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80",
+            "81",
+            "82",
+            "83",
+            "84",
+            "85",
+            "86",
+            "87",
+            "88",
+            "89",
+            "90",
+            "91",
+            "92",
+            "93",
+            "94",
+            "95",
+            "96",
+            "97",
+            "98",
+            "99",
+            "100"});
             this.cboNumeroEmpleado.Location = new System.Drawing.Point(165, 59);
             this.cboNumeroEmpleado.Name = "cboNumeroEmpleado";
             this.cboNumeroEmpleado.Size = new System.Drawing.Size(121, 21);
@@ -290,123 +272,123 @@ namespace DPRNIII_U2_A1_MAZM
             this.lblNumeroEmpleado.AutoSize = true;
             this.lblNumeroEmpleado.Location = new System.Drawing.Point(175, 34);
             this.lblNumeroEmpleado.Name = "lblNumeroEmpleado";
-            this.lblNumeroEmpleado.Size = new System.Drawing.Size(97, 13);
+            this.lblNumeroEmpleado.Size = new System.Drawing.Size(69, 13);
             this.lblNumeroEmpleado.TabIndex = 2;
-            this.lblNumeroEmpleado.Text = "Numero_Empleado";
+            this.lblNumeroEmpleado.Text = "Id_Empleado";
             // 
             // lblFolio
             // 
             this.lblFolio.AutoSize = true;
             this.lblFolio.Location = new System.Drawing.Point(10, 34);
             this.lblFolio.Name = "lblFolio";
-            this.lblFolio.Size = new System.Drawing.Size(77, 13);
+            this.lblFolio.Size = new System.Drawing.Size(64, 13);
             this.lblFolio.TabIndex = 1;
-            this.lblFolio.Text = "Folio_Proyecto";
+            this.lblFolio.Text = "Id_Proyecto";
             // 
             // cboFolio
             // 
             this.cboFolio.FormattingEnabled = true;
             this.cboFolio.Items.AddRange(new object[] {
-            "P1",
-            "P2",
-            "P3",
-            "P4",
-            "P5",
-            "P6",
-            "P7",
-            "P8",
-            "P9",
-            "P10",
-            "P11",
-            "P12",
-            "P13",
-            "P14",
-            "P15",
-            "P16",
-            "P17",
-            "P18",
-            "P19",
-            "P20",
-            "P21",
-            "P22",
-            "P23",
-            "P24",
-            "P25",
-            "P26",
-            "P27",
-            "P28",
-            "P29",
-            "P30",
-            "P31",
-            "P32",
-            "P33",
-            "P34",
-            "P35",
-            "P36",
-            "P37",
-            "P38",
-            "P39",
-            "P40",
-            "P41",
-            "P42",
-            "P43",
-            "P44",
-            "P45",
-            "P46",
-            "P47",
-            "P48",
-            "P49",
-            "P50",
-            "P51",
-            "P52",
-            "P53",
-            "P54",
-            "P55",
-            "P56",
-            "P57",
-            "P58",
-            "P59",
-            "P60",
-            "P61",
-            "P62",
-            "P63",
-            "P64",
-            "P65",
-            "P66",
-            "P67",
-            "P68",
-            "P69",
-            "P70",
-            "P71",
-            "P72",
-            "P73",
-            "P74",
-            "P75",
-            "P76",
-            "P77",
-            "P78",
-            "P79",
-            "P80",
-            "P81",
-            "P82",
-            "P83",
-            "P84",
-            "P85",
-            "P86",
-            "P87",
-            "P88",
-            "P89",
-            "P90",
-            "P91",
-            "P92",
-            "P93",
-            "P94",
-            "P95",
-            "P96",
-            "P97",
-            "P98",
-            "P99",
-            "P100"});
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "28",
+            "29",
+            "30",
+            "31",
+            "32",
+            "33",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60",
+            "61",
+            "62",
+            "63",
+            "64",
+            "65",
+            "66",
+            "67",
+            "68",
+            "69",
+            "70",
+            "71",
+            "72",
+            "73",
+            "74",
+            "75",
+            "76",
+            "77",
+            "78",
+            "79",
+            "80",
+            "81",
+            "82",
+            "83",
+            "84",
+            "85",
+            "86",
+            "87",
+            "88",
+            "89",
+            "90",
+            "91",
+            "92",
+            "93",
+            "94",
+            "95",
+            "96",
+            "97",
+            "98",
+            "99",
+            "100"});
             this.cboFolio.Location = new System.Drawing.Point(9, 59);
             this.cboFolio.Name = "cboFolio";
             this.cboFolio.Size = new System.Drawing.Size(121, 21);
@@ -471,15 +453,9 @@ namespace DPRNIII_U2_A1_MAZM
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Despliegue_Proyectos_Asignados";
             // 
-            // base_testDataSet
-            // 
-            // 
             // empleadoproyectoBindingSource
             // 
             this.empleadoproyectoBindingSource.DataMember = "empleado_proyecto";
-            // 
-            // empleado_proyectoTableAdapter
-            // 
             // 
             // frmAsignacionProyectos
             // 
@@ -522,7 +498,6 @@ namespace DPRNIII_U2_A1_MAZM
         public System.Windows.Forms.ComboBox cboNumeroEmpleado;
         public System.Windows.Forms.ComboBox cboFolio;
         private FontAwesome.Sharp.IconButton icbRemover;
-        private FontAwesome.Sharp.IconButton btnActualiza;
         public System.Windows.Forms.DataGridView dgvConsultaProyectos;
         private System.Windows.Forms.BindingSource empleadoproyectoBindingSource;
         
