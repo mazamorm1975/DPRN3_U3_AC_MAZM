@@ -11,12 +11,11 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
         //Se valida si el empleado puede ser asignado a un proyecto
         public static void ValidacionAsignacionEmpleadoProyecto()
         {
-            //clsAltaInformacion perfilDesarrollador = new clsAltaInformacion();
-
+            
             for (int i = 0; i < clsAltaInformacion.contarTotalRegistrosEmpleadosAsignados(); i++)
             {
                 //Se valida el proyecto
-                if (ValidaciónIngresoNuevoProyecto() == true)
+                if (clsAltaInformacion.ValidaciónIngresoNuevoProyecto() == true)
                 {
 
                     if (clsAltaInformacion.ubicaEmpleado() == false)
@@ -33,7 +32,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                                 //Arroja mensaje de restriccion a ingreso por exceder el maximo de desarrolladores
                                 Notificacion mensaje2 = new Notificacion(new NotificacionFalloProgramador());
                                 mensaje2.MostrarMensaje();
-                                break;
+                                 break;
                             }
                             else
                             {
@@ -60,7 +59,7 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                             }
                             else
                             {
-                                //Si aun hay cupo para un desarrollador lo inserta y sale del bucle
+                                //Si aun hay cupo para un lider de proyecto lo inserta y sale del bucle
                                 clsAltaInformacion.insertarDatosNuevaAsignacionAProyecto(frmAsignacionProyectos.noEmpleado, frmAsignacionProyectos.idProyecto, frmAsignacionProyectos.asignacionEmpleado, frmAsignacionProyectos.comentarios);
                                 break;
 
@@ -91,8 +90,9 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                         }
                     }
 
+                    /*
                     //Si el status del empleado es 0
-                    if (clsAltaInformacion.isAssigned() != 1)
+                    if (clsAltaInformacion.isAssigned() == false)
                     {
                         //Verifica si el empleado es Programador
                         Boolean isProgrammer = clsAltaInformacion.ValidaSiesRolDeProgramador();
@@ -161,21 +161,13 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
 
                             }
                         }
-                    }
 
+                        clsAltaInformacion.insertarDatosNuevaAsignacionAProyecto(frmAsignacionProyectos.noEmpleado, frmAsignacionProyectos.idProyecto, frmAsignacionProyectos.asignacionEmpleado, frmAsignacionProyectos.comentarios);
+                        break;
 
-                    /*//Se valida si se sacara a este empleado del proyecto actual
-                     if (clsAltaInformacion.isAssigned() == 1 && frmAsignacionProyectos.isAsignacion == 0)
-                     {
-                         clsAltaInformacion.actualizaInformaciónProyecto();
-                         //Arroja mensaje de restriccion a ingreso por exceder el maximo de desarrolladores
-                         Notificacion mensajeOffProject = new Notificacion(new NotificacionFueraDeProyecto());
-                         mensajeOffProject.MostrarMensaje();
-                         break;
-                     }*/
-
-
-                    if (clsAltaInformacion.isAssigned() == 1)
+                    }*/
+                    
+                    if (clsAltaInformacion.isAssigned() == true)
                     {
                         //Arroja mensaje de restriccion a ingreso por exceder el maximo de desarrolladores
                         Notificacion excedePosicion = new Notificacion(new NotificacionExcedeNumeroEmpleados());
@@ -187,22 +179,10 @@ namespace DPRNIII_U2_A1_MAZM.com.dprn3.model
                 {
                     break;
                 }
-            }
+             }
         }
 
-        //Se valida si el proyecto esta disponible o no esta disponible
-        public static Boolean ValidaciónIngresoNuevoProyecto()
-        {
-            string fechaFinalProyecto = clsAltaInformacion.fechaFinalExist();
-
-            if (!fechaFinalProyecto.Equals(""))
-            {
-                MessageBox.Show("El proyecto ya ha sido concluido, puesto que hay fecha de terminación.");
-                return false;
-            }
-
-            return true;
-        }
+        
 
         
 
